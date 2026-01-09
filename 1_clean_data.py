@@ -38,11 +38,12 @@ def write_csv_file(df, file_path, index=False):
 
 lyon_df = read_csv_file('data/listings_lyon.csv')
 paris_df = read_csv_file('data/listings_paris.csv')
-
+bordeaux_df = read_csv_file('data/listings_bordeaux.csv')
 lyon_df["target_city"] = "Lyon"
 paris_df["target_city"] = "Paris"
+bordeaux_df["target_city"] = "Bordeaux"
 
-df = pd.concat([lyon_df, paris_df], ignore_index=True)
+df = pd.concat([lyon_df, paris_df, bordeaux_df], ignore_index=True)
 
 df["location"] = (
     df["latitude"].astype(str) + "," + df["longitude"].astype(str)
@@ -60,5 +61,8 @@ df["price"] = (
 )
 
 df["price"] = pd.to_numeric(df["price"], errors="coerce")
+
+# Suppression des lignes avec des valeurs nulles dans price
+df = df.dropna(subset=["price"])
 
 df.to_json('data/airbnb_clean.json', orient='records', lines=True)
