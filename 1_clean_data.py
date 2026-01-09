@@ -38,12 +38,13 @@ def write_csv_file(df, file_path, index=False):
 
 lyon_df = read_csv_file('data/listings_lyon.csv')
 paris_df = read_csv_file('data/listings_paris.csv')
+pays_basque_df = read_csv_file('data/listings_pays_basque.csv')
 bordeaux_df = read_csv_file('data/listings_bordeaux.csv')
 lyon_df["target_city"] = "Lyon"
 paris_df["target_city"] = "Paris"
 bordeaux_df["target_city"] = "Bordeaux"
-
-df = pd.concat([lyon_df, paris_df, bordeaux_df], ignore_index=True)
+pays_basque_df["target_city"] = "Pays Basque"
+df = pd.concat([lyon_df, paris_df, bordeaux_df, pays_basque_df], ignore_index=True)
 
 df["location"] = (
     df["latitude"].astype(str) + "," + df["longitude"].astype(str)
